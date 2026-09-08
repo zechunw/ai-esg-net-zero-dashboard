@@ -1,0 +1,209 @@
+{
+    "companies": [
+        {
+            "name": "Apple Inc.",
+            "stock_code": "AAPL",
+            "industry": "technology",
+            "data": {
+                "net_zero_commitments": {
+                    "net_zero_target": true,
+                    "target_year": 2030,
+                    "sbti_committed": true,
+                    "re100_member": true,
+                    "commitment_sources": ["公司官网", "可持续发展报告"]
+                },
+                "emission_data": {
+                    "scope1_emissions": {
+                        "2021": {"value": 22.4, "unit": "ktCO2e"},
+                        "2022": {"value": 19.8, "unit": "ktCO2e"},
+                        "2023": {"value": 18.2, "unit": "ktCO2e"}
+                    },
+                    "scope2_emissions": {
+                        "2021": {"value": 95.2, "unit": "ktCO2e"},
+                        "2022": {"value": 85.6, "unit": "ktCO2e"},
+                        "2023": {"value": 76.3, "unit": "ktCO2e"}
+                    },
+                    "scope3_emissions": {
+                        "2021": {"value": 22400, "unit": "ktCO2e"},
+                        "2022": {"value": 21600, "unit": "ktCO2e"},
+                        "2023": {"value": 20800, "unit": "ktCO2e"}
+                    },
+                    "reduction_targets": {
+                        "scope1_2_2030": "75%",
+                        "scope3_2030": "25%",
+                        "baseline_year": 2015
+                    }
+                },
+                "ratings": {
+                    "msci": {"rating": "AA", "trend": "up"},
+                    "sustainalytics": {"risk_rating": "Low Risk", "risk_score": 14.8},
+                    "cdp": {"score": "A", "level": "Leadership"}
+                },
+                "capital_allocation": {
+                    "green_capex": {
+                        "2022": {"value": 4500, "unit": "百万美元", "占比": "35%"},
+                        "2023": {"value": 5200, "unit": "百万美元", "占比": "38%"}
+                    },
+                    "green_revenue": {
+                        "2022": {"value": 29000, "unit": "百万美元", "占比": "18%"},
+                        "2023": {"value": 33000, "unit": "百万美元", "占比": "20%"}
+                    },
+                    "低碳投资比例": "38%"
+                },
+                "news_sentiment": [
+                    {
+                        "title": "Apple承诺2030年实现碳中和",
+                        "source": "官方公告",
+                        "date": "2024-01-15",
+                        "sentiment": "positive"
+                    },
+                    {
+                        "title": "Apple绿色债券投资超50亿美元",
+                        "source": "财经媒体",
+                        "date": "2024-02-20",
+                        "sentiment": "positive"
+                    },
+                    {
+                        "title": "Apple可再生能源使用率达100%",
+                        "source": "行业报告",
+                        "date": "2024-03-10",
+                        "sentiment": "positive"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "BP plc",
+            "stock_code": "BP",
+            "industry": "energy",
+            "data": {
+                "net_zero_commitments": {
+                    "net_zero_target": true,
+                    "target_year": 2050,
+                    "sbti_committed": true,
+                    "re100_member": false,
+                    "commitment_sources": ["公司官网", "年度财报"]
+                },
+                "emission_data": {
+                    "scope1_emissions": {
+                        "2021": {"value": 48000, "unit": "ktCO2e"},
+                        "2022": {"value": 46000, "unit": "ktCO2e"},
+                        "2023": {"value": 45000, "unit": "ktCO2e"}
+                    },
+                    "scope2_emissions": {
+                        "2021": {"value": 8500, "unit": "ktCO2e"},
+                        "2022": {"value": 8200, "unit": "ktCO2e"},
+                        "2023": {"value": 7900, "unit": "ktCO2e"}
+                    },
+                    "reduction_targets": {
+                        "scope1_2_2030": "50%",
+                        "scope3_2030": "N/A",
+                        "baseline_year": 2019
+                    }
+                },
+                "ratings": {
+                    "msci": {"rating": "A", "trend": "stable"},
+                    "sustainalytics": {"risk_rating": "Medium Risk", "risk_score": 28.5},
+                    "cdp": {"score": "B", "level": "Management"}
+                },
+                "capital_allocation": {
+                    "green_capex": {
+                        "2022": {"value": 3200, "unit": "百万美元", "占比": "18%"},
+                        "2023": {"value": 2800, "unit": "百万美元", "占比": "15%"}
+                    },
+                    "低碳投资比例": "15%"
+                },
+                "news_sentiment": [
+                    {
+                        "title": "BP被质疑减少绿色投资",
+                        "source": "环保组织",
+                        "date": "2024-02-01",
+                        "sentiment": "negative",
+                        "greenwashing_risk": true
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Microsoft Corporation",
+            "stock_code": "MSFT",
+            "industry": "technology",
+            "data": {
+                "net_zero_commitments": {
+                    "net_zero_target": true,
+                    "target_year": 2030,
+                    "sbti_committed": true,
+                    "re100_member": true,
+                    "commitment_sources": ["公司官网", "可持续发展报告"]
+                },
+                "emission_data": {
+                    "scope1_emissions": {
+                        "2021": {"value": 120, "unit": "ktCO2e"},
+                        "2022": {"value": 115, "unit": "ktCO2e"},
+                        "2023": {"value": 110, "unit": "ktCO2e"}
+                    },
+                    "scope2_emissions": {
+                        "2021": {"value": 1850, "unit": "ktCO2e"},
+                        "2022": {"value": 1720, "unit": "ktCO2e"},
+                        "2023": {"value": 1600, "unit": "ktCO2e"}
+                    },
+                    "reduction_targets": {
+                        "scope1_2_2030": "100%",
+                        "scope3_2030": "50%",
+                        "baseline_year": 2020
+                    }
+                },
+                "ratings": {
+                    "msci": {"rating": "AAA", "trend": "up"},
+                    "sustainalytics": {"risk_rating": "Negligible Risk", "risk_score": 7.2},
+                    "cdp": {"score": "A", "level": "Leadership"}
+                },
+                "capital_allocation": {
+                    "green_capex": {
+                        "2022": {"value": 6800, "unit": "百万美元", "占比": "42%"},
+                        "2023": {"value": 7500, "unit": "百万美元", "占比": "45%"}
+                    },
+                    "低碳投资比例": "45%"
+                }
+            }
+        }
+    ],
+    "industry_benchmarks": {
+        "financial": {
+            "name": "金融业",
+            "avg_score": 3.2,
+            "dimension_averages": {
+                "long_term_aspiration": 3.5,
+                "mid_short_targets": 3.2,
+                "emission_performance": 2.8,
+                "disclosure": 3.6,
+                "decarbonization_strategy": 3.1,
+                "capital_allocation": 3.3
+            }
+        },
+        "technology": {
+            "name": "科技业",
+            "avg_score": 3.5,
+            "dimension_averages": {
+                "long_term_aspiration": 3.8,
+                "mid_short_targets": 3.5,
+                "emission_performance": 3.2,
+                "disclosure": 3.7,
+                "decarbonization_strategy": 3.6,
+                "capital_allocation": 3.4
+            }
+        },
+        "energy": {
+            "name": "能源业",
+            "avg_score": 2.5,
+            "dimension_averages": {
+                "long_term_aspiration": 2.8,
+                "mid_short_targets": 2.5,
+                "emission_performance": 2.2,
+                "disclosure": 2.8,
+                "decarbonization_strategy": 2.4,
+                "capital_allocation": 2.6
+            }
+        }
+    }
+}
