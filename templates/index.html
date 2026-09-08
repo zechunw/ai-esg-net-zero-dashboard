@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESG 净零契合度评估系统</title>
+    
+    <!-- ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <!-- 样式 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🌱</span>
+                    <h1>ESG 净零契合度评估系统</h1>
+                </div>
+                <div class="header-subtitle">
+                    <span>基于AI的智能ESG诊断平台</span>
+                    <span class="divider">|</span>
+                    <span>路博迈方法论驱动</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 输入区域 -->
+            <section class="input-section">
+                <div class="search-box">
+                    <div class="input-group">
+                        <label for="companyName">企业名称</label>
+                        <input type="text" id="companyName" placeholder="输入公司名称或股票代码" />
+                    </div>
+                    <div class="input-group">
+                        <label for="industry">行业</label>
+                        <select id="industry">
+                            <option value="">选择行业</option>
+                            <option value="financial">金融业</option>
+                            <option value="technology">科技业</option>
+                            <option value="manufacturing">制造业</option>
+                            <option value="energy">能源业</option>
+                            <option value="consumer">消费品业</option>
+                            <option value="healthcare">医疗健康</option>
+                            <option value="real_estate">房地产</option>
+                            <option value="transportation">交通运输</option>
+                        </select>
+                    </div>
+                    <button id="evaluateBtn" class="btn-primary">
+                        <span class="btn-icon">🔍</span>
+                        开始评估
+                    </button>
+                </div>
+                
+                <!-- 数据输入模式切换 -->
+                <div class="mode-toggle">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="manualMode">
+                        <span class="toggle-text">手动输入ESG数据</span>
+                    </label>
+                </div>
+                
+                <!-- 手动数据输入区域 -->
+                <div id="manualInputSection" class="manual-input hidden">
+                    <h3>手动输入ESG数据</h3>
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <label>净零目标年份</label>
+                            <input type="number" id="netZeroYear" placeholder="如: 2050" />
+                        </div>
+                        <div class="data-item">
+                            <label>SBTi认证</label>
+                            <select id="sbtiCertified">
+                                <option value="">请选择</option>
+                                <option value="true">是</option>
+                                <option value="false">否</option>
+                            </select>
+                        </div>
+                        <div class="data-item">
+                            <label>范畴1排放 (吨CO2e)</label>
+                            <input type="number" id="scope1Emissions" placeholder="2023年数据" />
+                        </div>
+                        <div class="data-item">
+                            <label>范畴2排放 (吨CO2e)</label>
+                            <input type="number" id="scope2Emissions" placeholder="2023年数据" />
+                        </div>
+                        <div class="data-item">
+                            <label>绿色资本支出占比 (%)</label>
+                            <input type="number" id="greenCapex" placeholder="如: 30" />
+                        </div>
+                        <div class="data-item">
+                            <label>绿色收入占比 (%)</label>
+                            <input type="number" id="greenRevenue" placeholder="如: 25" />
+                        </div>
+                        <div class="data-item full-width">
+                            <label>减排目标描述</label>
+                            <textarea id="reductionTargets" placeholder="描述企业的减排目标"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 加载状态 -->
+            <div id="loadingSection" class="loading-section hidden">
+                <div class="loading-spinner"></div>
+                <p>正在分析企业ESG数据...</p>
+                <p class="loading-step" id="loadingStep">正在采集数据...</p>
+                
+                <!-- AI搜索过程展示 -->
+                <div id="searchProcessSection" class="search-process hidden">
+                    <h4>🔍 AI搜索进度</h4>
+                    <div id="searchSteps" class="search-steps">
+                        <!-- 动态生成搜索步骤 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 公司选择模态框 -->
+            <div id="companySelectModal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>选择公司</h3>
+                        <button class="close-btn" onclick="closeCompanySelectModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>找到多个匹配的公司，请选择：</p>
+                        <div id="companyOptions" class="company-options">
+                            <!-- 动态生成公司选项 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 结果展示区域 -->
+            <section id="resultSection" class="result-section hidden">
+                <!-- 契合度状态卡片 -->
+                <div class="status-card">
+                    <div class="status-header">
+                        <h2 id="companyTitle">企业名称</h2>
+                        <span id="industryTag" class="industry-tag">行业</span>
+                    </div>
+                    <div class="status-body">
+                        <div class="status-indicator" id="statusIndicator">
+                            <div class="status-ring" id="statusRing"></div>
+                            <div class="status-score">
+                                <span class="score-value" id="overallScore">0.00</span>
+                                <span class="score-max">/ 5.00</span>
+                            </div>
+                        </div>
+                        <div class="status-info">
+                            <div class="status-label" id="statusLabel">契合度状态</div>
+                            <div class="status-description" id="statusDescription">
+                                正在分析中...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status-footer">
+                        <div class="risk-badge" id="greenwashingBadge">
+                            <span class="badge-icon">⚠️</span>
+                            <span class="badge-text">漂绿风险: 无</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 六维雷达图 -->
+                <div class="chart-card">
+                    <h3>六维ESG评估</h3>
+                    <div id="radarChart" class="chart-container"></div>
+                </div>
+
+                <!-- 维度详情表格 -->
+                <div class="detail-card">
+                    <h3>评估维度详情</h3>
+                    <table class="detail-table" id="dimensionTable">
+                        <thead>
+                            <tr>
+                                <th>评估维度</th>
+                                <th>评分</th>
+                                <th>评分理由</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dimensionTableBody">
+                            <!-- 动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 优劣势分析 -->
+                <div class="analysis-grid">
+                    <div class="analysis-card strengths">
+                        <h4>💪 优势分析</h4>
+                        <ul id="strengthsList">
+                            <!-- 动态生成 -->
+                        </ul>
+                    </div>
+                    <div class="analysis-card weaknesses">
+                        <h4>⚠️ 劣势分析</h4>
+                        <ul id="weaknessesList">
+                            <!-- 动态生成 -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- AI数据源展示 -->
+                <div id="dataSourcesSection" class="data-sources-card hidden">
+                    <h4>📚 AI参考数据源</h4>
+                    <div id="dataSourcesList" class="data-sources-list">
+                        <!-- 动态生成数据源 -->
+                    </div>
+                </div>
+
+                <!-- 改进建议 -->
+                <div class="suggestions-card">
+                    <h4>📋 改进建议</h4>
+                    <ol id="suggestionsList">
+                        <!-- 动态生成 -->
+                    </ol>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="action-buttons">
+                    <button class="btn-secondary" onclick="downloadReport('pdf')">
+                        <span class="btn-icon">📄</span>
+                        导出PDF报告
+                    </button>
+                    <button class="btn-secondary" onclick="downloadReport('excel')">
+                        <span class="btn-icon">📊</span>
+                        导出Excel
+                    </button>
+                    <button class="btn-secondary" onclick="compareWithIndustry()">
+                        <span class="btn-icon">📈</span>
+                        行业对比
+                    </button>
+                </div>
+            </section>
+
+            <!-- 行业对比模态框 -->
+            <div id="benchmarkModal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>行业基准对比</h3>
+                        <button class="close-btn" onclick="closeBenchmarkModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="benchmarkChart" class="benchmark-chart"></div>
+                        <div class="benchmark-summary" id="benchmarkSummary">
+                            <!-- 动态生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 历史对比区域 -->
+            <section id="historySection" class="history-section hidden">
+                <h3>📊 评估历史</h3>
+                <div id="historyChart" class="history-chart"></div>
+            </section>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>ESG 净零契合度评估系统 | 基于路博迈方法论 + AI驱动</p>
+            <p class="footer-note">IS5542 Gen AI for Business - Group Project</p>
+        </footer>
+    </div>
+
+    <!-- 脚本 -->
+    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
