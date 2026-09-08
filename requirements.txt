@@ -1,0 +1,32 @@
+# ESG Dashboard - Python Dependencies
+
+# Web Framework
+Flask==3.0.0
+flask-cors==4.0.0
+
+# HTTP Requests
+requests==2.31.0
+urllib3==2.1.0
+
+# HTML Parsing
+beautifulsoup4==4.12.2
+lxml==4.9.3
+
+# AI Integration
+openai==1.6.1
+anthropic==0.7.7
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.2
+
+# Utilities
+python-dotenv==1.0.0
+python-dateutil==2.8.2
+
+# CORS Support
+flask-cors==4.0.0
+
+# PDF/Excel Export
+reportlab==4.0.7
+openpyxl==3.1.2
