@@ -1,113 +1,175 @@
-# ESG 评估系统 - 净零契合度诊断平台
+# ESG Assessment System — Net-Zero Alignment Diagnostic Platform
 
-## 项目概述
+## Overview
 
-这是一个基于AI的ESG（环境、社会、治理）评估系统，结合路博迈（Neuberger Berman）的「净零契合度」方法论，提供动态、可视化的企业ESG评估服务。
+This project is an AI-powered ESG (Environmental, Social, and Governance) assessment system inspired by Neuberger Berman's net-zero alignment methodology. It provides dynamic, visual assessments of a company's ESG performance and transition readiness.
 
-### 核心功能
+## Key Features
 
-- **🔍 AI智能搜索** - 自动搜索公司信息，支持模糊匹配，智能识别公司名称
-- **🤖 AI数据采集** - 自动搜集ESG报告、碳排放数据、ESG评级、相关新闻
-- **📊 六维评估引擎** - 基于长期抱负、中短期目标、排放绩效、信息披露、脱碳策略、资本配置六大维度进行1-5分量化评分
-- **⚠️ AI漂绿识别** - 自动识别"漂绿"行为并调整评分
-- **📈 可视化看板** - 六维雷达图、契合度状态标签、优劣势深度解析
-- **📚 数据来源透明** - 展示AI搜索过程和参考数据来源
-- **💡 改进建议** - 转型偏离预警、具体改进路径建议
-- **📄 报告导出** - PDF/Excel报告导出、同业基准对比
+- **AI-powered company search** — Finds and validates companies, supports fuzzy matching, and resolves similar company names.
+- **Automated ESG data collection** — Collects ESG reports, emissions data, ESG ratings, and related news.
+- **Six-dimension assessment engine** — Scores companies from 1 to 5 across long-term ambition, near- and medium-term targets, emissions performance, disclosure, decarbonization strategy, and capital allocation.
+- **Greenwashing detection** — Identifies potential greenwashing signals and adjusts assessment scores accordingly.
+- **Interactive dashboard** — Presents radar charts, alignment status labels, and detailed strengths and weaknesses.
+- **Transparent data sources** — Shows the AI search process and the sources used during an assessment.
+- **Actionable recommendations** — Highlights transition risks and suggests practical improvement pathways.
+- **Report export** — Exports PDF and Excel reports and supports peer benchmarking.
 
-## 技术栈
+## Technology Stack
 
-- **后端**: Python Flask
-- **前端**: HTML5 + CSS3 + JavaScript
-- **图表库**: ECharts
-- **AI模型**: DeepSeek API (免费) / OpenAI GPT / Claude API
+- **Backend:** Python and Flask
+- **Frontend:** HTML5, CSS3, and JavaScript
+- **Charts:** ECharts
+- **AI providers:** DeepSeek API, OpenAI API, or Anthropic Claude API
 
-## 目录结构
+## Project Structure
 
-```
+```text
 ESG_Dashboard/
-├── app.py                    # Flask应用主入口
-├── config.py                 # 配置文件
-├── ai_search_engine.py       # AI搜索引擎模块
-├── data_collector.py         # 数据采集模块
-├── evaluation_engine.py      # 评估引擎
-├── report_generator.py       # 报告生成器
-├── requirements.txt          # Python依赖
-├── .env.example              # 环境变量配置模板
+├── app.py                    # Flask application entry point
+├── config.py                 # Application configuration
+├── ai_search_engine.py       # AI search engine
+├── data_collector.py         # ESG data collection
+├── evaluation_engine.py      # ESG evaluation engine
+├── report_generator.py       # PDF and Excel report generation
+├── requirements.txt          # Python dependencies
+├── .env.example              # Environment variable template
 ├── README.md
 ├── static/
 │   ├── css/
-│   │   └── style.css         # 样式文件
+│   │   └── style.css         # Application styles
 │   └── js/
-│       ├── main.js           # 主逻辑
-│       ├── chart.js          # 图表配置
-│       └── api.js            # API调用
+│       ├── main.js           # Main frontend logic
+│       ├── chart.js          # Chart configuration
+│       └── api.js            # API requests
 ├── templates/
-│   └── index.html            # 主页面
-├── data/                     # 数据目录
-├── reports/                  # 报告导出目录
-├── docs/                     # 文档目录
-├── 启动ESG系统.bat           # Windows启动脚本
-└── 一键启动.bat              # 一键启动脚本
+│   └── index.html            # Main page template
+├── data/                     # Sample and runtime data
+├── reports/                  # Generated reports (not committed)
+├── docs/                     # Project documentation
+├── 启动ESG系统.bat           # Windows startup script
+└── 一键启动.bat              # Windows one-click startup script
 ```
 
-## 快速开始
+## Quick Start
 
-### 1. 安装依赖
+### 1. Create and activate a virtual environment
+
+Windows:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+macOS or Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. 配置AI API（推荐DeepSeek，免费额度充足）
+### 3. Configure an AI provider
 
-1. 访问 [DeepSeek Platform](https://platform.deepseek.com/) 注册账号
-2. 创建API Key
-3. 用文本文档的方式打开 `.env`文件 并填入你的API Key：
+Copy the environment template:
 
-```
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-```
-
-### 3. 启动服务
-
-**方式一：使用一键启动脚本（Windows）**
 ```bash
-一键启动.bat
+cp .env.example .env
 ```
 
-**方式二：命令行启动**
+On Windows Command Prompt, use:
+
+```bat
+copy .env.example .env
+```
+
+Open `.env` and add at least one API key. DeepSeek is the primary provider used by the search engine:
+
+```dotenv
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+DEEPSEEK_MODEL=deepseek-chat
+```
+
+Optional fallback providers can also be configured:
+
+```dotenv
+OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_MODEL=gpt-4
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+```
+
+Never commit your real `.env` file or API keys.
+
+### 4. Start the application
+
+From the command line:
+
 ```bash
 python app.py
 ```
 
-访问 http://localhost:5000 查看应用
+Windows users can alternatively run either startup script:
 
-## AI功能使用说明
+```bat
+一键启动.bat
+```
 
-### 公司搜索
-- 输入公司名称（支持模糊搜索）
-- AI会自动验证公司是否存在
-- 如果存在多个相似公司，会提示用户选择
-- 如果不存在，会提示"公司不存在，请重新输入"
+Open [http://localhost:5000](http://localhost:5000) in a browser.
 
-### AI搜索过程
-- 评估时会实时显示AI的搜索进度
-- 包括：公司信息搜索、ESG报告查找、碳排放数据搜索、新闻分析等步骤
+## How the AI Features Work
 
-### 数据来源
-- 评估结果页面会显示AI参考的所有数据来源
-- 包括ESG报告、新闻、评级机构等
-- 点击链接可直接访问原始资料
+### Company Search
 
-## 开发团队
+- Enter a company name; fuzzy matching is supported.
+- The AI validates whether the company exists.
+- If several similar companies are found, the system asks the user to choose one.
+- If no company is found, the user is prompted to enter another name.
 
-| 团队 | 职责 | 成员数 |
-|------|------|--------|
-| Task Force A | 数据与AI后端 | 2人 |
-| Task Force B | 前端与可视化 | 2人 |
-| Task Force C | 系统整合与敏捷管理 | 3人 |
+### Assessment Process
+
+The interface displays live progress while the system searches for:
+
+- Company information
+- ESG and sustainability reports
+- Carbon emissions data
+- ESG ratings
+- Relevant news and controversies
+
+### Data Sources
+
+The results page lists the sources used by the AI, including ESG reports, news articles, and rating agencies. Available source links can be opened directly for verification.
+
+## Assessment Dimensions
+
+| Dimension | What It Evaluates |
+| --- | --- |
+| Long-term ambition | Net-zero commitments and alignment with a 1.5°C pathway |
+| Near- and medium-term targets | Interim targets and Scope 1, 2, and 3 coverage |
+| Emissions performance | Historical emissions trajectory and reduction performance |
+| Disclosure | Transparency and alignment with major reporting standards |
+| Decarbonization strategy | Credibility and feasibility of the transition plan |
+| Capital allocation | Green capital expenditure, investment, and revenue exposure |
+
+## Development Team
+
+| Team | Responsibility | Members |
+| --- | --- | ---: |
+| Task Force A | Data and AI backend | 2 |
+| Task Force B | Frontend and visualization | 2 |
+| Task Force C | System integration and agile management | 3 |
+
+## Security Notes
+
+- Keep API keys in `.env`; the file is excluded by `.gitignore`.
+- Do not commit virtual environments, generated reports, caches, or evaluation history.
+- Review AI-generated findings and their cited sources before using them for investment or compliance decisions.
 
 ## License
 
-MIT License
+This project is licensed under the MIT License.
